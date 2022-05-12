@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH --job-name=edit
+#SBATCH --mail-user=fpenagaricano@ufl.edu
+#SBATCH --mail-type=FAIL
+#SBATCH --ntasks=1 
+#SBATCH --cpus-per-task=8
+#SBATCH --mem-per-cpu=3990mb
+#SBATCH --time=192:00:00
+
+module load fastqc
+module load cutadapt
+module load trim_galore
+
+trim_galore --paired -phred33 --clip_R1 5 --clip_R2 5 --three_prime_clip_R1 40 --three_prime_clip_R2 40 -o /ufrc/penagaricano/fpenagaricano/Methylation/methionine/editData/ $1'_1'.fq $1'_2'.fq
+

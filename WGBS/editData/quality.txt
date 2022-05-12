@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --job-name=methQuality
+#SBATCH --mail-user=fpenagaricano@ufl.edu
+#SBATCH --mail-type=ALL
+#SBATCH --ntasks=1 
+#SBATCH --mem-per-cpu=15999mb
+#SBATCH --time=144:00:00
+
+module load fastqc
+
+sample=(M6125 M6126 M6152 M6153 M6157 M6197 M6226 M6254 M6412 M6415 M6419 M6438 M6453 M6472 M6485 M6520)
+pair=(1 2)
+
+for i in "${sample[@]}" 
+do 
+	for j in "${pair[@]}" 
+        do
+		z=$i'_'$j'_val_'$j.fq
+		fastqc -o /ufrc/penagaricano/fpenagaricano/Methylation/methionine/editQuality/ $z
+	sleep 1
+	done
+done
+
+

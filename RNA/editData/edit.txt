@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH --job-name=editRawData
+#SBATCH --mail-user=fpenagaricano@ufl.edu
+#SBATCH --mail-type=FAIL
+#SBATCH --ntasks=1 
+#SBATCH --cpus-per-task=8
+#SBATCH --mem-per-cpu=2990mb
+#SBATCH --time=192:00:00
+
+module load fastqc
+module load cutadapt
+module load trim_galore
+
+cd /ufrc/penagaricano/ramorin/RNAseq/Muscle/Data/
+
+trim_galore --paired --illumina --clip_R1 10 --clip_R2 10 --three_prime_clip_R1 10 --three_prime_clip_R2 10 -o /ufrc/penagaricano/fpenagaricano/RNASeq/methionine/editData/ $1'_R1'*fastq $1'_R2'*fastq
+
+

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sample=(ls *.bam)
+
+for i in "${sample[@]}" 
+do 
+        sbatch deduplicate.txt $i
+	sleep 1
+done
+

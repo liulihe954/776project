@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --job-name=shareCs
+#SBATCH --mail-user=fpenagaricano@ufl.edu
+#SBATCH --mail-type=ALL
+#SBATCH --ntasks=1 
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=2990mb
+#SBATCH --time=480:00:00
+
+sample=(M6125 M6126 M6152 M6153 M6157 M6197 M6226 M6254 M6412 M6415 M6419 M6438 M6453 M6472 M6485 M6520)
+
+for i in "${sample[@]}" 
+do 
+	echo $i
+	awk '{print $1.$2.$3 "\t" $0}' extractPaired/$i*bismark.cov > $i.2
+	awk '{print $1.$2.$3 "\t" $0}' extractSingle/$i*bismark.cov > $i.1
+	wc -l $i.2
+	wc -l $i.1
+	comm -12 <(awk '{print $1}' $i.2 | sort) <(awk '{print $1}' $i.1 | sort) | wc -l
+	rm $i*
+	echo "###########"        
+
+done > out.txt
+

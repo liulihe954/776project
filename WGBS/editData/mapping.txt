@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH --job-name=mapping
+#SBATCH --mail-user=fpenagaricano@ufl.edu
+#SBATCH --mail-type=FAIL
+#SBATCH --ntasks=1 
+#SBATCH --cpus-per-task=16
+#SBATCH --mem-per-cpu=2990mb
+#SBATCH --time=480:00:00
+
+module load bowtie2/2.3.4.3
+module load bismark/0.20.1
+
+bismark --parallel 4 --unmapped -o /ufrc/penagaricano/fpenagaricano/Methylation/methionine/mapPaired /ufrc/penagaricano/fpenagaricano/Methylation/khatib/genome -1 $1'_1_val_1'.fq -2 $1'_2_val_2'.fq
+
